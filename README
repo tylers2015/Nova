@@ -1,0 +1,26 @@
+
+# Nova
+
+Nova is Tyler's local AI assistant system.
+
+## Goals
+- Local AI assistant
+- Project memory
+- Morning briefings
+- Home automation
+- Voice interaction
+- System monitoring
+- Self-maintenance tools
+
+## Current Stack
+- Ubuntu/Linux AI PC
+- Ollama
+- Open WebUI
+- Docker
+- Home Assistant
+- VS Code Remote SSH
+
+## Philosophy
+Nova's core memory, scripts, and configuration should remain portable and permanent.
+External programs are replaceable modules.
+EOF
