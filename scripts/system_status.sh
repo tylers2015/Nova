@@ -83,4 +83,24 @@ echo "====================================="
 echo "Nova status check complete."
 echo "====================================="
 
+# Resource Alerts
+
+DISK_USE=$(df / | awk 'NR==2 {gsub("%","",$5); print $5}')
+if [ "$DISK_USE" -ge 85 ]; then
+  /home/ai/Nova/scripts/notify.sh WARN "Disk usage is high at ${DISK_USE} percent"
+fi
+
+RAM_USE=$(free | awk '/Mem:/ {printf "%.0f", $3/$2 * 100}')
+if [ "$RAM_USE" -ge 90 ]; then
+  /home/ai/Nova/scripts/notify.sh WARN "Memory usage is high at ${RAM_USE} percent"
+fi
+
+if ! docker ps --format '{{.Names}}' | grep -q "homeassistant"; then
+  /home/ai/Nova/scripts/notify.sh ERROR "Home Assistant container is not running"
+fi
+
+if ! docker ps --format '{{.Names}}' | grep -q "open-webui"; then
+  /home/ai/Nova/scripts/notify.sh ERROR "Open WebUI container is not running"
+fi
+
 /home/ai/Nova/scripts/notify.sh SUCCESS "System health check completed"
