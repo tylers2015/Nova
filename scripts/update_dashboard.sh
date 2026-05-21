@@ -2,7 +2,14 @@
 
 HTML_FILE="/home/ai/Nova/dashboard/index.html"
 
-RECENT_EVENTS=$(tail -n 8 /home/ai/Nova/logs/events/events.log 2>/dev/null)
+NOVA_VERSION="Nova OS v0.1"
+NOVA_MODE="Monitoring"
+NOVA_ROLE="Local AI Assistant Node"
+RECENT_EVENTS=$(tail -n 8 /home/ai/Nova/logs/events/events.log 2>/dev/null | \
+sed -e 's/\[SUCCESS\]/<span class="event-success">[SUCCESS]<\/span>/g' \
+    -e 's/\[WARN\]/<span class="event-warn">[WARN]<\/span>/g' \
+    -e 's/\[ERROR\]/<span class="event-error">[ERROR]<\/span>/g' \
+    -e 's/\[INFO\]/<span class="event-info">[INFO]<\/span>/g')
 WEATHER_CONDITION=$(curl -s "wttr.in/Fort+Mill?format=%C")
 WEATHER_TEMP=$(curl -s "wttr.in/Fort+Mill?format=%t")
 WEATHER_FEELS=$(curl -s "wttr.in/Fort+Mill?format=%f")
@@ -86,6 +93,17 @@ h1 {
 .good { color: #7CFC00; }
 .warn { color: #ffd166; }
 .bad { color: #ff4d4d; }
+.info { color: #7dcfff; }
+.event-success { color: #7CFC00; }
+.event-warn { color: #ffd166; }
+.event-error { color: #ff4d4d; }
+.event-info { color: #7dcfff; }
+
+.small {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
 pre {
   white-space: pre-wrap;
   font-size: 14px;
@@ -103,6 +121,9 @@ pre {
 <div class="header">
   <div>
     <h1>Nova <span class="online">ONLINE</span></h1>
+    <div>$NOVA_VERSION</div>
+    <div>$NOVA_ROLE</div>
+    <div>Mode: $NOVA_MODE</div>
     <div>$DATE_NOW</div>
   </div>
   <div class="big">$TIME_NOW</div>
@@ -165,9 +186,9 @@ pre {
     <pre>$RECENT_HEALTH</pre>
   </div>
 
-    <div class="card wide">
-    <div class="label">Recent Events</div>
-    <pre>$RECENT_EVENTS</pre>
+  <div class="card wide">
+    <div class="label">Recent Events</div> 
+    <div class="small">$RECENT_EVENTS</div>
   </div>
 
 </div>
