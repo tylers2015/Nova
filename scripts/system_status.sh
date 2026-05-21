@@ -64,3 +64,5 @@ echo ""
 echo "====================================="
 echo "Nova status check complete."
 echo "====================================="
+
+/home/ai/Nova/scripts/log_event.sh SUCCESS "System health check completed"

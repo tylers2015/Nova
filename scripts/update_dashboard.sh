@@ -2,6 +2,7 @@
 
 HTML_FILE="/home/ai/Nova/dashboard/index.html"
 
+RECENT_EVENTS=$(tail -n 8 /home/ai/Nova/logs/events/events.log 2>/dev/null)
 WEATHER_CONDITION=$(curl -s "wttr.in/Fort+Mill?format=%C")
 WEATHER_TEMP=$(curl -s "wttr.in/Fort+Mill?format=%t")
 WEATHER_FEELS=$(curl -s "wttr.in/Fort+Mill?format=%f")
@@ -164,6 +165,11 @@ pre {
     <pre>$RECENT_HEALTH</pre>
   </div>
 
+    <div class="card wide">
+    <div class="label">Recent Events</div>
+    <pre>$RECENT_EVENTS</pre>
+  </div>
+
 </div>
 
 <div class="footer">
@@ -173,3 +179,4 @@ Last dashboard update: $LAST_UPDATE | Auto-refresh: 60 seconds
 </body>
 </html>
 EOF
+/home/ai/Nova/scripts/log_event.sh "Dashboard updated"
