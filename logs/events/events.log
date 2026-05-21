@@ -147,3 +147,84 @@
 2026-05-21 02:21:05 PM [INFO] Dashboard updated
 2026-05-21 02:22:14 PM [INFO] Dashboard updated
 2026-05-21 02:22:16 PM [WARN] Removed dashboard startup speech due to service restart issue
+2026-05-21 02:23:05 PM [INFO] Dashboard updated
+2026-05-21 02:24:09 PM [INFO] Dashboard updated
+2026-05-21 02:25:07 PM [INFO] Dashboard updated
+2026-05-21 02:26:06 PM [INFO] Dashboard updated
+2026-05-21 02:27:17 PM [INFO] Dashboard updated
+2026-05-21 02:28:00 PM [INFO] Nova notification layer created
+2026-05-21 02:28:00 PM [SUCCESS] Notification script test successful
+2026-05-21 02:28:07 PM [INFO] Dashboard updated
+2026-05-21 02:28:41 PM [WARN] This is a spoken warning test
+2026-05-21 02:29:05 PM [ERROR] This is a spoken error test
+2026-05-21 02:29:07 PM [INFO] Dashboard updated
+2026-05-21 02:30:07 PM [INFO] Dashboard updated
+2026-05-21 02:30:50 PM [SUCCESS] Morning briefing completed
+2026-05-21 02:30:51 PM [SUCCESS] System health check completed
+2026-05-21 02:31:13 PM [INFO] Dashboard updated
+2026-05-21 02:32:05 PM [INFO] Dashboard updated
+2026-05-21 02:33:06 PM [INFO] Dashboard updated
+2026-05-21 02:34:15 PM [INFO] Dashboard updated
+2026-05-21 02:35:09 PM [INFO] Dashboard updated
+2026-05-21 02:35:38 PM [SUCCESS] System health check completed
+2026-05-21 02:36:06 PM [INFO] Dashboard updated
+2026-05-21 02:36:59 PM [ERROR] Ollama API offline
+2026-05-21 02:37:03 PM [SUCCESS] System health check completed
+2026-05-21 02:37:07 PM [INFO] Dashboard updated
+2026-05-21 02:37:37 PM [INFO] Dashboard updated
+2026-05-21 02:38:07 PM [INFO] Dashboard updated
+2026-05-21 02:39:09 PM [INFO] Dashboard updated
+2026-05-21 02:40:06 PM [INFO] Dashboard updated
+2026-05-21 02:40:16 PM [SUCCESS] System health check completed
+2026-05-21 02:40:28 PM [SUCCESS] System health check completed
+2026-05-21 02:40:38 PM [INFO] Dashboard updated
+2026-05-21 02:40:48 PM [SUCCESS] Ollama failure detection test completed successfully
+2026-05-21 02:41:07 PM [INFO] Dashboard updated
+2026-05-21 02:42:08 PM [INFO] Dashboard updated
+2026-05-21 02:43:12 PM [INFO] Dashboard updated
+2026-05-21 02:44:07 PM [INFO] Dashboard updated
+2026-05-21 02:44:24 PM [SUCCESS] Ollama service restored
+2026-05-21 02:45:18 PM [INFO] Dashboard updated
+2026-05-21 02:46:10 PM [INFO] Dashboard updated
+2026-05-21 02:47:15 PM [INFO] Dashboard updated
+2026-05-21 02:48:08 PM [INFO] Dashboard updated
+2026-05-21 02:49:05 PM [INFO] Dashboard updated
+2026-05-21 02:50:05 PM [INFO] Dashboard updated
+2026-05-21 02:50:17 PM [SUCCESS] System health check completed
+2026-05-21 02:50:59 PM [ERROR] Ollama went offline
+2026-05-21 02:51:02 PM [SUCCESS] System health check completed
+2026-05-21 02:51:05 PM [INFO] Dashboard updated
+2026-05-21 02:51:22 PM [SUCCESS] Ollama recovered and is back online
+2026-05-21 02:51:23 PM [SUCCESS] System health check completed
+2026-05-21 02:52:07 PM [INFO] Dashboard updated
+2026-05-21 02:53:23 PM [INFO] Dashboard updated
+2026-05-21 02:54:07 PM [INFO] Dashboard updated
+2026-05-21 02:54:45 PM [ERROR] Ollama went offline
+2026-05-21 02:54:51 PM [SUCCESS] System health check completed
+2026-05-21 02:55:06 PM [SUCCESS] Ollama recovered and is back online
+2026-05-21 02:55:06 PM [SUCCESS] System health check completed
+2026-05-21 02:55:08 PM [INFO] Dashboard updated
+2026-05-21 02:56:11 PM [INFO] Dashboard updated
+2026-05-21 02:57:09 PM [INFO] Dashboard updated
+2026-05-21 02:58:15 PM [INFO] Dashboard updated
+2026-05-21 02:59:06 PM [INFO] Dashboard updated
+2026-05-21 03:00:07 PM [INFO] Dashboard updated
+2026-05-21 03:01:07 PM [INFO] Dashboard updated
+2026-05-21 03:02:11 PM [INFO] Dashboard updated
+2026-05-21 03:03:09 PM [INFO] Dashboard updated
+2026-05-21 03:04:14 PM [INFO] Dashboard updated
+2026-05-21 03:04:35 PM [ERROR] Ollama went offline
+2026-05-21 03:04:38 PM [SUCCESS] System health check completed
+2026-05-21 03:04:51 PM [SUCCESS] Ollama recovered and is back online
+2026-05-21 03:05:01 PM [WARN] Internet went offline
+2026-05-21 03:05:08 PM [SUCCESS] System health check completed
+2026-05-21 03:05:12 PM [INFO] Dashboard updated
+2026-05-21 03:06:07 PM [INFO] Dashboard updated
+2026-05-21 03:07:09 PM [INFO] Dashboard updated
+2026-05-21 03:07:28 PM [SUCCESS] Internet recovered and is back online
+2026-05-21 03:07:28 PM [SUCCESS] System health check completed
+2026-05-21 03:08:12 PM [INFO] Dashboard updated
+2026-05-21 03:09:05 PM [INFO] Dashboard updated
+2026-05-21 03:10:08 PM [INFO] Dashboard updated
+2026-05-21 03:10:58 PM [SUCCESS] Internet recovered and is back online
+2026-05-21 03:11:08 PM [INFO] Dashboard updated

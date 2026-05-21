@@ -14,4 +14,4 @@ echo ""
 echo "Nova services:"
 docker ps --format "table {{.Names}}\t{{.Status}}"
 
-/home/ai/Nova/scripts/log_event.sh SUCCESS "Morning briefing completed"
+/home/ai/Nova/scripts/notify.sh SUCCESS "Morning briefing completed"
