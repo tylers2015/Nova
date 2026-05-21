@@ -26,6 +26,31 @@ IP_LAN=$(hostname -I | awk '{print $1}')
 IP_TS=$(hostname -I | awk '{print $2}')
 OLLAMA=$(curl -s http://127.0.0.1:11434/api/tags > /dev/null && echo "ONLINE" || echo "OFFLINE")
 TAILSCALE=$(tailscale status > /dev/null 2>&1 && echo "ONLINE" || echo "OFFLINE")
+if curl -s http://127.0.0.1:11434/api/tags > /dev/null; then
+  OLLAMA_LIGHT="green"
+else
+  OLLAMA_LIGHT="red"
+fi
+
+if tailscale status > /dev/null 2>&1; then
+  TAILSCALE_LIGHT="green"
+else
+  TAILSCALE_LIGHT="red"
+fi
+
+if ping -c 1 8.8.8.8 > /dev/null 2>&1; then
+  INTERNET_LIGHT="green"
+else
+  INTERNET_LIGHT="red"
+fi
+
+if docker ps > /dev/null 2>&1; then
+  DOCKER_LIGHT="green"
+else
+  DOCKER_LIGHT="red"
+fi
+
+
 DOCKER=$(docker ps --format "<div class='service good'>● {{.Names}} <span>{{.Status}}</span></div>")
 MODELS=$(ollama list | tail -n +2 | awk '{print "<div>" $1 " — " $3 $4 "</div>"}')
 RECENT_HEALTH=$(ls -t /home/ai/Nova/logs/health/*.log 2>/dev/null | head -1 | xargs -r tail -n 8)
@@ -98,6 +123,17 @@ h1 {
 .event-warn { color: #ffd166; }
 .event-error { color: #ff4d4d; }
 .event-info { color: #7dcfff; }
+
+.status-light {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.green { background: #7CFC00; box-shadow: 0 0 10px #7CFC00; }
+.yellow { background: #ffd166; box-shadow: 0 0 10px #ffd166; }
+.red { background: #ff4d4d; box-shadow: 0 0 10px #ff4d4d; }
 
 .small {
   font-size: 15px;
