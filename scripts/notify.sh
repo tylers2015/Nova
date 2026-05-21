@@ -1,6 +1,8 @@
 #!/bin/bash
 
 LEVEL="$1"
+ALERT_DIR="/home/ai/Nova/state/alerts"
+mkdir -p "$ALERT_DIR"
 shift
 MESSAGE="$*"
 
@@ -13,13 +15,22 @@ fi
 
 case "$LEVEL" in
   ERROR)
-    /home/ai/Nova/scripts/speak.sh "Error. $MESSAGE"
+    ALERT_FILE="$ALERT_DIR/error_$(echo "$MESSAGE" | tr " " "_")"
+    if [ ! -f "$ALERT_FILE" ]; then
+      touch "$ALERT_FILE"
+      /home/ai/Nova/scripts/speak.sh "Error. $MESSAGE"
+    fi
     ;;
   WARN)
-    /home/ai/Nova/scripts/speak.sh "Warning. $MESSAGE"
+    ALERT_FILE="$ALERT_DIR/warn_$(echo "$MESSAGE" | tr " " "_")"
+    if [ ! -f "$ALERT_FILE" ]; then
+      touch "$ALERT_FILE"
+      /home/ai/Nova/scripts/speak.sh "Warning. $MESSAGE"
+    fi
     ;;
   SUCCESS)
     if echo "$MESSAGE" | grep -qi "recovered"; then
+      rm -f "$ALERT_DIR"/* 2>/dev/null
       /home/ai/Nova/scripts/speak.sh "$MESSAGE"
     fi
     ;;
