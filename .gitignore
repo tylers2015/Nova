@@ -31,3 +31,7 @@ backups/
 .DS_Store
 .vscode/
 .idea/
+
+
+dashboard/index.html
+logs/events/events.logO
