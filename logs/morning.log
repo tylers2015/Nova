@@ -31,3 +31,27 @@ Nova services:
 NAMES           STATUS
 homeassistant   Up 18 hours
 open-webui      Up 18 hours (healthy)
+Good morning Tyler. It is 07:00 AM on Friday, May 22. Current weather in Fort Mill is Mist +69°F. Nova is online.
+
+Ollama models:
+NAME                       ID              SIZE      MODIFIED     
+nomic-embed-text:latest    0a109f422b47    274 MB    15 hours ago    
+qwen2.5-coder:7b           dae161e27b0e    4.7 GB    3 days ago      
+llama3.2:3b                a80c4f17acd5    2.0 GB    3 days ago      
+
+Nova services:
+NAMES           STATUS
+homeassistant   Up 12 hours
+open-webui      Up 12 hours (healthy)
+Good morning Tyler. It is 07:00 AM on Saturday, May 23. Current weather in Fort Mill is Overcast +62°F. Nova is online.
+
+Ollama models:
+NAME                       ID              SIZE      MODIFIED     
+nomic-embed-text:latest    0a109f422b47    274 MB    39 hours ago    
+qwen2.5-coder:7b           dae161e27b0e    4.7 GB    4 days ago      
+llama3.2:3b                a80c4f17acd5    2.0 GB    4 days ago      
+
+Nova services:
+NAMES           STATUS
+homeassistant   Up 36 hours
+open-webui      Up 36 hours (healthy)
