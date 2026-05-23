@@ -1,0 +1,33 @@
+# Secrets
+.env
+*.key
+*.pem
+*.token
+secrets/
+credentials/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Logs / runtime files
+logs/**/*.log
+logs/**/*.state
+*.log
+state/alerts/
+state/*.state
+
+# Local databases / indexes
+*.db
+*.sqlite
+*.sqlite3
+
+# Backups
+backups/
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
