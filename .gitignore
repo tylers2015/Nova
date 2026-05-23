@@ -35,3 +35,12 @@ backups/
 
 dashboard/index.html
 logs/events/events.logO
+
+# Runtime / generated
+logs/
+state/
+dashboard/index.html
+venv/
+__pycache__/
+*.pyc
+.env
