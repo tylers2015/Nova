@@ -531,3 +531,115 @@ Nova currently operates as:
 * a future robotics coordination platform
 
 This repository serves as the operational source of truth for the Nova project.
+
+# Current Working Infrastructure
+
+## Core Nova Server
+
+- Hostname: ai-HP-Pro-3515-Series
+- Local IP: 192.168.0.144
+- Dashboard: http://192.168.0.144:5050
+- Open WebUI: http://192.168.0.144:3000
+- Home Assistant: http://192.168.0.144:8123
+- Ollama: http://127.0.0.1:11434
+
+### Roles
+- Semantic memory
+- Monitoring
+- Dashboard
+- Home Assistant integration
+- Weather alerts
+- Automation orchestration
+- Voice coordination
+
+## Gaming PC Node
+
+- Hostname: DESKTOP-RAVOV92
+- Tailscale IP: 100.114.205.101
+
+### Roles
+- Bedroom voice node
+- Spotify media node
+- Polk soundbar controller
+- Future microphone node
+- Future GPU inference node
+
+# Audio Routing
+
+## Conference Speaker
+- WARN alerts
+- ERROR alerts
+- Severe weather alerts
+
+## Gaming PC Speakers
+- Morning briefings
+- Night reminders
+- Bedroom notifications
+
+## Polk Soundbar
+- Spotify playback
+- Ambient music
+- Morning routines
+
+# Persistent Spotify Automation
+
+Nova uses a trigger-file architecture.
+
+Flow:
+Nova Server -> SSH -> Trigger File -> Watcher -> Spotify -> Playback
+
+## Trigger File
+C:\Nova\start_spotify.trigger
+
+## Watcher Script
+C:\Nova\spotify_watcher.ps1
+
+## Startup VBS
+C:\Nova\start_spotify_watcher.vbs
+
+## Working Remote Trigger Command
+sshpass -p 'NovaTempPass123!' ssh nova@100.114.205.101 'type nul > C:\Nova\start_spotify.trigger'
+
+# Morning Routine
+
+Flow:
+- Light turns on
+- Nova speaks briefing
+- Spotify launches
+- Music starts automatically
+- Polk soundbar wakes
+
+File:
+~/Nova/morning_briefing.py
+
+# Night Routine
+
+Flow:
+- Light dims blue
+- Nova bedtime reminder
+- Overnight monitoring mode
+
+File:
+~/Nova/night_routine.py
+
+# Severe Weather Alerts
+
+Flow:
+- Light turns red
+- Voice warning plays
+- Monitoring continues
+- Light restores after alert
+
+# Important Commands
+
+## Test Morning Routine
+python3 ~/Nova/morning_briefing.py
+
+## Test Night Routine
+python3 ~/Nova/night_routine.py
+
+## Trigger Spotify
+sshpass -p 'NovaTempPass123!' ssh nova@100.114.205.101 'type nul > C:\Nova\start_spotify.trigger'
+
+## Start Watcher Manually
+powershell.exe -ExecutionPolicy Bypass -File C:\Nova\spotify_watcher.ps1
