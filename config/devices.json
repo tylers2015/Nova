@@ -1,0 +1,22 @@
+{
+  "back_door_lock": {
+    "type": "lock",
+    "vendor": "TEEHO",
+    "model": "TE011W",
+    "protocol": "wifi_ble_cloud",
+    "state": "unknown",
+    "integration": "kk_home",
+    "mac": "C0:71:AA:4D:1D:51"
+  },
+
+  "bedroom_light": {
+    "type": "light",
+    "integration": "home_assistant",
+    "state": "off"
+  },
+
+  "gaming_pc": {
+    "type": "computer",
+    "state": "online"
+  }
+}

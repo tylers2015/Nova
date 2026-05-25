@@ -19,6 +19,7 @@ case "$LEVEL" in
     if [ ! -f "$ALERT_FILE" ]; then
       touch "$ALERT_FILE"
       /home/ai/Nova/scripts/speak.sh "Error. $MESSAGE"
+      /home/ai/Nova/scripts/speak_gaming_pc.sh "Error. $MESSAGE"
     fi
     ;;
   WARN)
@@ -26,12 +27,14 @@ case "$LEVEL" in
     if [ ! -f "$ALERT_FILE" ]; then
       touch "$ALERT_FILE"
       /home/ai/Nova/scripts/speak.sh "Warning. $MESSAGE"
+      /home/ai/Nova/scripts/speak_gaming_pc.sh "Warning. $MESSAGE"
     fi
     ;;
   SUCCESS)
     if echo "$MESSAGE" | grep -qi "recovered"; then
       rm -f "$ALERT_DIR"/* 2>/dev/null
       /home/ai/Nova/scripts/speak.sh "$MESSAGE"
+      /home/ai/Nova/scripts/speak_gaming_pc.sh "$MESSAGE"
     fi
     ;;
   INFO)

@@ -2,8 +2,7 @@
 
 WEATHER=$(curl -s wttr.in/Fort+Mill?format="%C+%t")
 
-MESSAGE="Good morning Tyler. It is $(date '+%I:%M %p on %A, %B %d'). Current weather in Fort Mill is $WEATHER. Nova is online."
-
+MESSAGE="Good morning Tyler. It is $(date '+%I:%M %p on %A, %B %d'). Nova is online. Current weather in Fort Mill is $WEATHER. Your core services are running, the dashboard is active, and system monitoring is enabled. I will continue watching for alerts, service failures, and recovery events. Have a good morning."
 echo "$MESSAGE"
 
 echo ""

@@ -1,0 +1,4 @@
+Today’s focus is improving Nova’s personality and voice system. We added command memory, lighting modes, and a more natural assistant flow. Next priorities are better daily awareness, cleaner commands, and smarter proactive behavior.
+- clean up voice commands
+- go to do laundry
+- test daily note logging

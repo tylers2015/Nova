@@ -19,7 +19,7 @@ def dim_light():
     data = {
         "entity_id": LIGHT_ENTITY,
         "brightness_pct": 8,
-        "color_temp_kelvin": 2200
+        "rgb_color": [0, 0, 255]
     }
     requests.post(url, headers=headers, json=data, timeout=10)
 

@@ -1,0 +1,17 @@
+Lighting Modes
+- Chill mode uses warm orange lighting
+- Night mode uses dim blue lighting
+- Kids rave mode flashes multiple colors
+- Movie mode uses dim red lighting
+
+Morning Routine
+- Uses Zira voice
+- Starts Spotify playlist
+- Reads weather
+- Controls bedroom light
+
+Voice System
+- Wake word is Nova
+- Listener active window is 12 seconds
+- Unknown commands are logged
+
