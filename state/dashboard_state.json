@@ -1,0 +1,11 @@
+{
+  "nova_mode": "day",
+  "voice_listener": "",
+  "last_unknown_command": "yes",
+  "bedroom_light_mode": "unknown",
+  "back_door_lock": "unknown",
+  "spotify_watcher": "unknown",
+  "notes_today": 0,
+  "unknown_commands": 37,
+  "last_updated": "2026-05-30 02:31:01 PM"
+}

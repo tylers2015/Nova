@@ -44,9 +44,9 @@ def run_command(text):
 
     # Passive wake mode
     if time.time() > active_until:
-        if "nova" in text:
+        if "hey nova" in text or "okay nova" in text or "ok nova" in text or "nova" in text or "no va" in text or "noda" in text or "novah" in text or "computer" in text:
             active_until = time.time() + ACTIVE_SECONDS
-            speak("Yes Tyler.")
+            subprocess.run(["/home/ai/Nova/scripts/speak_fast.sh", "Yes Tyler."])
         return
 
     # Contextual conversation replies
@@ -95,12 +95,12 @@ def run_command(text):
             conversation_state["pending_question"] = None
             return
 
-            speak("Yes Tyler.")
+            subprocess.run(["/home/ai/Nova/scripts/speak_fast.sh", "Yes Tyler."])
         return
 
     # Active command mode
-    if "nova" in text:
-        text = text.replace("nova", "").strip()
+    if "hey nova" in text or "okay nova" in text or "ok nova" in text or "nova" in text or "no va" in text or "noda" in text or "novah" in text or "computer" in text:
+        text = text.replace("hey nova", "").replace("okay nova", "").replace("ok nova", "").replace("nova", "").replace("no va", "").replace("noda", "").replace("novah", "").replace("computer", "").strip()
 
     active_until = time.time() + ACTIVE_SECONDS
 

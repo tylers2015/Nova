@@ -1,4 +1,5 @@
 #!/bin/bash
+/bin/bash /home/ai/Nova/scripts/build_dashboard_state.sh
 
 HTML_FILE="/home/ai/Nova/dashboard/index.html"
 
@@ -54,7 +55,33 @@ fi
 DOCKER=$(docker ps --format "<div class='service good'>● {{.Names}} <span>{{.Status}}</span></div>")
 MODELS=$(ollama list | tail -n +2 | awk '{print "<div>" $1 " — " $3 $4 "</div>"}')
 RECENT_HEALTH=$(ls -t /home/ai/Nova/logs/health/*.log 2>/dev/null | head -1 | xargs -r tail -n 8)
-LAST_UPDATE=$(date '+%I:%M:%S %p')
+LAST_UP
+
+EVENT_SUMMARY=$(tail -n 80 /home/ai/Nova/logs/events/events.log 2>/dev/null | \
+sed -E 's/^[0-9-]+ [0-9:]+ [APM]+ //' | \
+sort | uniq -c | \
+sed -E 's/^ *([0-9]+) /\1x /' | \
+tail -n 8)
+
+DASH_STATE="/home/ai/Nova/state/dashboard_state.json"
+
+if [ -f "$DASH_STATE" ]; then
+  VOICE_LISTENER=$(python3 -c 'import json;print(json.load(open("/home/ai/Nova/state/dashboard_state.json")).get("voice_listener","unknown"))')
+  LAST_UNKNOWN=$(python3 -c 'import json;print(json.load(open("/home/ai/Nova/state/dashboard_state.json")).get("last_unknown_command","none"))')
+  NOTES_TODAY=$(python3 -c 'import json;print(json.load(open("/home/ai/Nova/state/dashboard_state.json")).get("notes_today",0))')
+  UNKNOWN_COMMANDS=$(python3 -c 'import json;print(json.load(open("/home/ai/Nova/state/dashboard_state.json")).get("unknown_commands",0))')
+  BACK_DOOR=$(python3 -c 'import json;print(json.load(open("/home/ai/Nova/state/dashboard_state.json")).get("back_door_lock","unknown"))')
+  LIGHT_MODE=$(python3 -c 'import json;print(json.load(open("/home/ai/Nova/state/dashboard_state.json")).get("bedroom_light_mode","unknown"))')
+else
+  VOICE_LISTENER="unknown"
+  LAST_UNKNOWN="none"
+  NOTES_TODAY="0"
+  UNKNOWN_COMMANDS="0"
+  BACK_DOOR="unknown"
+  LIGHT_MODE="unknown"
+fi
+
+DATE=$(date '+%I:%M:%S %p')
 
 cat > "$HTML_FILE" <<EOF
 <!DOCTYPE html>
@@ -201,6 +228,18 @@ pre {
     <div class="value">$TAILSCALE</div>
   </div>
 
+
+  <div class="card wide">
+    <div class="label">Nova State</div>
+    <div class="service good">● Voice Listener <span>$VOICE_LISTENER</span></div>
+    <div class="service info">● Bedroom Light Mode <span>$LIGHT_MODE</span></div>
+    <div class="service warn">● Back Door Lock <span>$BACK_DOOR</span></div>
+    <div class="service info">● Notes Today <span>$NOTES_TODAY</span></div>
+    <div class="service warn">● Unknown Commands <span>$UNKNOWN_COMMANDS</span></div>
+    <div class="small">Last unknown command: $LAST_UNKNOWN</div>
+  </div>
+
+
   <div class="card wide">
     <div class="label">Docker Services</div>
     $DOCKER
@@ -224,7 +263,7 @@ pre {
 
   <div class="card wide">
     <div class="label">Recent Events</div> 
-    <div class="small">$RECENT_EVENTS</div>
+    <pre>$EVENT_SUMMARY</pre>
   </div>
 
 </div>

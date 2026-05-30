@@ -1,46 +1,23 @@
-# Secrets
-.env
-*.key
-*.pem
-*.token
-secrets/
-credentials/
-
 # Python
-venv/
 __pycache__/
 *.pyc
-.pytest_cache/
 
-# Logs / runtime files
-logs/**/*.log
-logs/**/*.state
-*.log
-state/alerts/
-state/*.state
-
-# Local databases / indexes
-*.db
-*.sqlite
-*.sqlite3
-
-# Backups
-backups/
-
-# OS/editor
-.DS_Store
-.vscode/
-.idea/
-
-
-dashboard/index.html
-logs/events/events.logO
-
-# Runtime / generated
-logs/
-state/
-dashboard/index.html
-venv/
-__pycache__/
-*.pyc
+# Environment
 .env
+venv/
+
+# Logs
+logs/
+
+# Memory
+memory/daily/
+memory/*.txt
+
+# Models
+models/*.zip
+
+# Audio
+*.wav
+
+# System
+.DS_Store
