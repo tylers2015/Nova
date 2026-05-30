@@ -1,0 +1,1 @@
+- [ ] Build speech-to-text pipeline for Nova.

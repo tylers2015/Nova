@@ -1,0 +1,11 @@
+#!/bin/bash
+
+QUERY="$*"
+
+if [ -z "$QUERY" ]; then
+  echo "Usage: nova-search search terms"
+  exit 1
+fi
+
+grep -Rin --color=always "$QUERY" "$HOME/Nova/projects" "$HOME/Nova/docs" "$HOME/Nova/logs" 2>/dev/null
+

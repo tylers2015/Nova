@@ -1,0 +1,28 @@
+#!/bin/bash
+
+PROJECT="$1"
+shift
+NOTE="$*"
+
+if [ -z "$PROJECT" ] || [ -z "$NOTE" ]; then
+  echo "Usage: nova-note project_name \"note text\""
+  exit 1
+fi
+
+DIR="$HOME/Nova/projects/$PROJECT"
+
+if [ ! -d "$DIR" ]; then
+  echo "Project not found: $PROJECT"
+  echo "Available projects:"
+  ls "$HOME/Nova/projects"
+  exit 1
+fi
+
+{
+  echo ""
+  echo "## $(date '+%Y-%m-%d %I:%M %p')"
+  echo "$NOTE"
+} >> "$DIR/LOG.md"
+
+echo "Added note to $PROJECT."
+

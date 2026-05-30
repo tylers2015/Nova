@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "Nova Projects:"
+echo ""
+
+for d in "$HOME/Nova/projects"/*; do
+  [ -d "$d" ] || continue
+  name=$(basename "$d")
+  todos=$(grep -c "^- \[ \]" "$d/TODO.md" 2>/dev/null)
+  done_count=$(grep -c "^- \[x\]" "$d/TODO.md" 2>/dev/null)
+
+  echo "$name"
+  echo "  Open TODOs: $todos"
+  echo "  Done TODOs: $done_count"
+  echo ""
+done

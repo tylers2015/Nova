@@ -1,0 +1,22 @@
+#!/bin/bash
+
+PROJECT="$1"
+shift
+TASK="$*"
+
+if [ -z "$PROJECT" ] || [ -z "$TASK" ]; then
+  echo "Usage: nova-todo project_name \"task text\""
+  exit 1
+fi
+
+DIR="$HOME/Nova/projects/$PROJECT"
+
+if [ ! -d "$DIR" ]; then
+  echo "Project not found: $PROJECT"
+  ls "$HOME/Nova/projects"
+  exit 1
+fi
+
+echo "- [ ] $TASK" >> "$DIR/TODO.md"
+
+echo "Added TODO to $PROJECT."
