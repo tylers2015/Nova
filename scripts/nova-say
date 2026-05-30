@@ -1,0 +1,17 @@
+#!/bin/bash
+
+TEXT="$*"
+
+if [ -z "$TEXT" ]; then
+  echo "Usage: nova-say \"text to speak\""
+  exit 1
+fi
+
+VOICE="$HOME/Nova/voices/en_US-amy-low.onnx"
+OUT="$HOME/Nova/tmp/nova_say.wav"
+
+mkdir -p "$HOME/Nova/tmp"
+
+echo "$TEXT" | piper --model "$VOICE" --output_file "$OUT"
+
+aplay -q "$OUT"

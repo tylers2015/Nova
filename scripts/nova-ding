@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+import sys
+import wave
+import math
+import subprocess
+from pathlib import Path
+
+tmp = Path.home() / "Nova" / "tmp"
+tmp.mkdir(parents=True, exist_ok=True)
+
+kind = sys.argv[1] if len(sys.argv) > 1 else "success"
+out = tmp / "nova_ding.wav"
+
+rate = 44100
+
+patterns = {
+    "success": [(880, 0.10), (1175, 0.12)],
+    "error": [(220, 0.18), (165, 0.22)],
+    "ready": [(660, 0.08), (880, 0.08)],
+    "wait": [(440, 0.08)],
+}
+
+tones = patterns.get(kind, patterns["success"])
+
+samples = []
+
+for freq, dur in tones:
+    total = int(rate * dur)
+    for i in range(total):
+        amp = int(22000 * math.sin(2 * math.pi * freq * i / rate))
+        samples.append(amp)
+    samples.extend([0] * int(rate * 0.04))
+
+with wave.open(str(out), "w") as wav:
+    wav.setnchannels(1)
+    wav.setsampwidth(2)
+    wav.setframerate(rate)
+
+    for s in samples:
+        wav.writeframesraw(int(s).to_bytes(2, byteorder="little", signed=True))
+
+subprocess.run(["aplay", "-q", str(out)])
