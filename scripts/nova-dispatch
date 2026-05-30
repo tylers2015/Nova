@@ -7,26 +7,47 @@ NOVA = Path.home() / "Nova"
 SCRIPTS = NOVA / "scripts"
 PROJECTS = NOVA / "projects"
 
+def speak(text):
+    subprocess.run([str(SCRIPTS / "nova-say"), text])
+
+def ding(kind="success"):
+    subprocess.run([str(SCRIPTS / "nova-ding"), kind])
+
 def run(cmd):
     result = subprocess.run(cmd, text=True, capture_output=True)
-    print(result.stdout.strip())
+
+    if result.stdout.strip():
+        print(result.stdout.strip())
+
     if result.stderr.strip():
         print(result.stderr.strip())
+
+    return result.returncode, result.stdout.strip(), result.stderr.strip()
 
 def projects():
     return [p.name for p in PROJECTS.iterdir() if p.is_dir()]
 
 def find_project(text):
+    words = text.lower().split()
     for p in projects():
-        if p.lower() in text.lower().split():
+        if p.lower() in words:
             return p
     return None
+
+def fail(message):
+    print(message)
+    ding("error")
+    speak(message)
+
+def success(message):
+    ding("success")
+    speak(message)
 
 def main():
     text = " ".join(sys.argv[1:]).strip()
 
     if not text:
-        print('Usage: nova-dispatch "add todo to voice build speech pipeline"')
+        fail('Usage: nova-dispatch "add todo to voice build speech pipeline"')
         return
 
     lower = text.lower()
@@ -34,50 +55,73 @@ def main():
 
     if lower.startswith("search "):
         query = text[7:].strip()
-        run([str(SCRIPTS / "nova-search"), query])
+        code, out, err = run([str(SCRIPTS / "nova-search"), query])
+        if out:
+            success("Search complete.")
+        else:
+            fail("I did not find anything.")
         return
 
     if "project status" in lower or lower in ["projects", "status"]:
         run([str(SCRIPTS / "nova-projects")])
+        success("Project status complete.")
         return
 
     if "add todo" in lower or "add task" in lower:
         if not project:
-            print("I need a project name. Available projects:")
+            fail("I need a project name.")
+            print("Available projects:")
             print(", ".join(projects()))
             return
 
         words = text.split()
-        project_index = [w.lower() for w in words].index(project.lower())
+        lower_words = [w.lower() for w in words]
+        project_index = lower_words.index(project.lower())
         task = " ".join(words[project_index + 1:]).strip()
 
-        task = task.replace("to ", "", 1).strip()
+        if task.lower().startswith("to "):
+            task = task[3:].strip()
 
         if not task:
-            print("I found the project, but I need the task.")
+            fail("I found the project, but I need the task.")
             return
 
-        run([str(SCRIPTS / "nova-todo"), project, task])
+        code, out, err = run([str(SCRIPTS / "nova-todo"), project, task])
+
+        if code == 0:
+            success(f"Added TODO to {project}.")
+        else:
+            fail(f"I could not add the TODO to {project}.")
         return
 
     if "add note" in lower or "log note" in lower:
         if not project:
-            print("I need a project name. Available projects:")
+            fail("I need a project name.")
+            print("Available projects:")
             print(", ".join(projects()))
             return
 
         words = text.split()
-        project_index = [w.lower() for w in words].index(project.lower())
+        lower_words = [w.lower() for w in words]
+        project_index = lower_words.index(project.lower())
         note = " ".join(words[project_index + 1:]).strip()
 
+        if note.lower().startswith("to "):
+            note = note[3:].strip()
+
         if not note:
-            print("I found the project, but I need the note.")
+            fail("I found the project, but I need the note.")
             return
 
-        run([str(SCRIPTS / "nova-note"), project, note])
+        code, out, err = run([str(SCRIPTS / "nova-note"), project, note])
+
+        if code == 0:
+            success(f"Added note to {project}.")
+        else:
+            fail(f"I could not add the note to {project}.")
         return
 
-    print("I did not understand that command.")
+    fail("I did not understand that command.")
     print("Try:")
     print('  nova-dispatch "add todo to voice build speech-to-text pipeline"')
     print('  nova-dispatch "add note to mower encoder mounts need checking"')
