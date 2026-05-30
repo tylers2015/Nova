@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+import sys
+import subprocess
+from pathlib import Path
+
+NOVA = Path.home() / "Nova"
+SCRIPTS = NOVA / "scripts"
+PROJECTS = NOVA / "projects"
+
+def run(cmd):
+    result = subprocess.run(cmd, text=True, capture_output=True)
+    print(result.stdout.strip())
+    if result.stderr.strip():
+        print(result.stderr.strip())
+
+def projects():
+    return [p.name for p in PROJECTS.iterdir() if p.is_dir()]
+
+def find_project(text):
+    for p in projects():
+        if p.lower() in text.lower().split():
+            return p
+    return None
+
+def main():
+    text = " ".join(sys.argv[1:]).strip()
+
+    if not text:
+        print('Usage: nova-dispatch "add todo to voice build speech pipeline"')
+        return
+
+    lower = text.lower()
+    project = find_project(text)
+
+    if lower.startswith("search "):
+        query = text[7:].strip()
+        run([str(SCRIPTS / "nova-search"), query])
+        return
+
+    if "project status" in lower or lower in ["projects", "status"]:
+        run([str(SCRIPTS / "nova-projects")])
+        return
+
+    if "add todo" in lower or "add task" in lower:
+        if not project:
+            print("I need a project name. Available projects:")
+            print(", ".join(projects()))
+            return
+
+        words = text.split()
+        project_index = [w.lower() for w in words].index(project.lower())
+        task = " ".join(words[project_index + 1:]).strip()
+
+        task = task.replace("to ", "", 1).strip()
+
+        if not task:
+            print("I found the project, but I need the task.")
+            return
+
+        run([str(SCRIPTS / "nova-todo"), project, task])
+        return
+
+    if "add note" in lower or "log note" in lower:
+        if not project:
+            print("I need a project name. Available projects:")
+            print(", ".join(projects()))
+            return
+
+        words = text.split()
+        project_index = [w.lower() for w in words].index(project.lower())
+        note = " ".join(words[project_index + 1:]).strip()
+
+        if not note:
+            print("I found the project, but I need the note.")
+            return
+
+        run([str(SCRIPTS / "nova-note"), project, note])
+        return
+
+    print("I did not understand that command.")
+    print("Try:")
+    print('  nova-dispatch "add todo to voice build speech-to-text pipeline"')
+    print('  nova-dispatch "add note to mower encoder mounts need checking"')
+    print('  nova-dispatch "search pendant"')
+    print('  nova-dispatch "project status"')
+
+if __name__ == "__main__":
+    main()
