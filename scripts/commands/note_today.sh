@@ -16,3 +16,4 @@ echo "- $NOTE" >> /home/ai/Nova/memory/today.txt
 
 /home/ai/Nova/scripts/speak.sh "I added that to today's notes."
 /home/ai/Nova/scripts/notify.sh SUCCESS "Added daily note"
+/home/ai/Nova/scripts/update_dashboard.sh

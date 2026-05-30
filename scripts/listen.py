@@ -41,6 +41,16 @@ def callback(indata, frames, time_info, status):
 def run_command(text):
     global active_until, pending_note_mode, conversation_state, routine_state
 
+    # Capture pending note content before any other command processing.
+    if pending_note_mode:
+        note_text = text.strip()
+        if note_text:
+            subprocess.run([
+                "/home/ai/Nova/scripts/commands/note_today.sh",
+                note_text
+            ])
+        pending_note_mode = False
+        return
 
     # Passive wake mode
     if time.time() > active_until:
