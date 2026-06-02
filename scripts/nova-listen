@@ -1,0 +1,29 @@
+#!/bin/bash
+
+TMP="$HOME/Nova/tmp"
+MODEL="$HOME/Nova/engines/whisper.cpp/models/ggml-tiny.en.bin"
+WHISPER="$HOME/Nova/engines/whisper.cpp/build/bin/whisper-cli"
+AUDIO="$TMP/nova_listen.wav"
+TEXTFILE="$TMP/nova_listen.txt"
+
+mkdir -p "$TMP"
+
+echo "Listening for 5 seconds..."
+"$HOME/Nova/scripts/nova-ding" ready
+
+arecord -d 5 -f S16_LE -r 16000 -c 1 "$AUDIO"
+
+echo "Transcribing..."
+"$WHISPER" -m "$MODEL" -f "$AUDIO" -otxt -of "$TMP/nova_listen" -nt >/dev/null 2>&1
+
+TEXT=$(cat "$TEXTFILE" 2>/dev/null | tr '\n' ' ' | sed 's/^ *//;s/ *$//')
+
+echo "Heard: $TEXT"
+
+if [ -z "$TEXT" ]; then
+  "$HOME/Nova/scripts/nova-ding" error
+  "$HOME/Nova/scripts/nova-say" "I did not hear anything."
+  exit 1
+fi
+
+"$HOME/Nova/scripts/nova-dispatch" "$TEXT"
