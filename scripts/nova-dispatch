@@ -13,6 +13,29 @@ def speak(text):
 def ding(kind="success"):
     subprocess.run([str(SCRIPTS / "nova-ding"), kind])
 
+def normalize(text):
+    t = text.lower().strip()
+
+    replacements = {
+        "to do": "todo",
+        "to-do": "todo",
+        "and todo": "add todo",
+        "bad todo": "add todo",
+        "ad todo": "add todo",
+        "at todo": "add todo",
+        "add to": "add todo",
+        "add two do": "add todo",
+        "add to do": "add todo",
+        "log no": "log note",
+        "add no": "add note",
+    }
+
+    for old, new in replacements.items():
+        t = t.replace(old, new)
+
+    t = t.replace(".", "").replace(",", "")
+    return t
+
 def run(cmd):
     result = subprocess.run(cmd, text=True, capture_output=True)
 
@@ -43,15 +66,24 @@ def success(message):
     ding("success")
     speak(message)
 
-def main():
-    text = " ".join(sys.argv[1:]).strip()
+def after_project_text(text, project):
+    words = text.split()
+    lower_words = [w.lower() for w in words]
+    project_index = lower_words.index(project.lower())
+    return " ".join(words[project_index + 1:]).strip()
 
-    if not text:
+def main():
+    raw_text = " ".join(sys.argv[1:]).strip()
+
+    if not raw_text:
         fail('Usage: nova-dispatch "add todo to voice build speech pipeline"')
         return
 
-    lower = text.lower()
+    text = normalize(raw_text)
+    lower = text
     project = find_project(text)
+
+    print(f"Normalized: {text}")
 
     if lower.startswith("search "):
         query = text[7:].strip()
@@ -74,12 +106,9 @@ def main():
             print(", ".join(projects()))
             return
 
-        words = text.split()
-        lower_words = [w.lower() for w in words]
-        project_index = lower_words.index(project.lower())
-        task = " ".join(words[project_index + 1:]).strip()
+        task = after_project_text(text, project)
 
-        if task.lower().startswith("to "):
+        if task.startswith("to "):
             task = task[3:].strip()
 
         if not task:
@@ -101,12 +130,9 @@ def main():
             print(", ".join(projects()))
             return
 
-        words = text.split()
-        lower_words = [w.lower() for w in words]
-        project_index = lower_words.index(project.lower())
-        note = " ".join(words[project_index + 1:]).strip()
+        note = after_project_text(text, project)
 
-        if note.lower().startswith("to "):
+        if note.startswith("to "):
             note = note[3:].strip()
 
         if not note:
