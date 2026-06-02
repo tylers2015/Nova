@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nova Status</title>
+  <meta http-equiv="refresh" content="15">
+  <style>
+    body { font-family: Arial, sans-serif; background:#111; color:#eee; padding:30px; }
+    h1 { color:#8fd3ff; }
+    .card { background:#222; border-radius:12px; padding:15px; margin:10px 0; }
+    .ok { border-left:8px solid #00c853; }
+    .down { border-left:8px solid #ff1744; }
+    .name { font-size:22px; font-weight:bold; }
+    .msg { font-size:18px; margin-top:5px; }
+    .time { color:#aaa; margin-bottom:20px; }
+  </style>
+</head>
+<body>
+  <h1>Nova System Status</h1>
+  <div class="time" id="updated">Loading...</div>
+  <div id="systems"></div>
+
+<script>
+fetch("data/status.json")
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById("updated").innerText = "Updated: " + data.updated;
+    const box = document.getElementById("systems");
+    box.innerHTML = "";
+    data.systems.forEach(s => {
+      const div = document.createElement("div");
+      div.className = "card " + (s.state === "OK" ? "ok" : "down");
+      div.innerHTML = `<div class="name">${s.state === "OK" ? "✅" : "❌"} ${s.name}</div>
+                       <div class="msg">${s.message}</div>`;
+      box.appendChild(div);
+    });
+  });
+</script>
+</body>
+</html>

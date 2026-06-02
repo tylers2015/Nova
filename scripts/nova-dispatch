@@ -94,12 +94,20 @@ def main():
             fail("I did not find anything.")
         return
 
-    if "jellyfin status" in lower or lower in ["jellyfin", "media server status"]:
-        code, out, err = run([str(SCRIPTS / "nova-jellyfin-status")])
+    if "system status" in lower or lower in ["status", "systems"]:
+        code, out, err = run([str(SCRIPTS / "nova-status")])
         if code == 0:
-            success("Jellyfin on the gaming PC is online.")
+            success("All monitored systems are online.")
         else:
-            fail("Jellyfin on the gaming PC appears to be down.")
+            fail("One or more systems need attention.")
+        return
+
+    if "jellyfin status" in lower or lower in ["jellyfin", "media server status"]:
+        code, out, err = run([str(SCRIPTS / "nova-status"), "jellyfin"])
+        if code == 0:
+            success("Jellyfin is online.")
+        else:
+            fail("Jellyfin appears to be down.")
         return
 
     if "project status" in lower or lower in ["projects", "status"]:

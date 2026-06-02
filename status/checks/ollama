@@ -1,0 +1,11 @@
+#!/bin/bash
+NAME="Ollama"
+URL="http://127.0.0.1:11434/api/tags"
+
+if curl -fsS --max-time 5 "$URL" >/dev/null; then
+  echo "OK|$NAME|Online|$URL"
+  exit 0
+else
+  echo "DOWN|$NAME|Down|$URL"
+  exit 1
+fi

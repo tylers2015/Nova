@@ -1,0 +1,37 @@
+{
+  "updated": "2026-06-02 07:11:01 PM",
+  "systems": [
+    {
+      "id": "homeassistant",
+      "name": "Home Assistant",
+      "state": "OK",
+      "message": "Online",
+      "url": "http://127.0.0.1:8123",
+      "exit_code": 0
+    },
+    {
+      "id": "jellyfin",
+      "name": "Jellyfin",
+      "state": "OK",
+      "message": "Online",
+      "url": "http://192.168.0.226:8096/web/",
+      "exit_code": 0
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama",
+      "state": "OK",
+      "message": "Online",
+      "url": "http://127.0.0.1:11434/api/tags",
+      "exit_code": 0
+    },
+    {
+      "id": "openwebui",
+      "name": "Open WebUI",
+      "state": "DOWN",
+      "message": "Down",
+      "url": "http://127.0.0.1:3000",
+      "exit_code": 1
+    }
+  ]
+}
