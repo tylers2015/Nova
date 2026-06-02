@@ -1,0 +1,12 @@
+#!/bin/bash
+
+URL="http://192.168.0.226:8096/web/"
+NAME="Jellyfin gaming PC"
+
+if curl -fsS --max-time 5 "$URL" >/dev/null; then
+  echo "$NAME is online."
+  exit 0
+else
+  echo "$NAME appears to be down."
+  exit 1
+fi

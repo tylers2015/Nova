@@ -1,0 +1,26 @@
+#!/bin/bash
+
+STATEFILE="$HOME/Nova/tmp/jellyfin_state"
+mkdir -p "$HOME/Nova/tmp" "$HOME/Nova/logs/incidents"
+
+if "$HOME/Nova/scripts/nova-jellyfin-status" >/dev/null; then
+  CURRENT="online"
+else
+  CURRENT="down"
+fi
+
+LAST=$(cat "$STATEFILE" 2>/dev/null)
+
+if [ "$CURRENT" = "down" ] && [ "$LAST" != "down" ]; then
+  "$HOME/Nova/scripts/nova-ding" error
+  "$HOME/Nova/scripts/nova-say" "Alert. Jellyfin on the gaming PC appears to be down."
+  echo "$(date): Jellyfin gaming PC down" >> "$HOME/Nova/logs/incidents/jellyfin.log"
+fi
+
+if [ "$CURRENT" = "online" ] && [ "$LAST" = "down" ]; then
+  "$HOME/Nova/scripts/nova-ding" success
+  "$HOME/Nova/scripts/nova-say" "Jellyfin on the gaming PC is back online."
+  echo "$(date): Jellyfin gaming PC restored" >> "$HOME/Nova/logs/incidents/jellyfin.log"
+fi
+
+echo "$CURRENT" > "$STATEFILE"
