@@ -1,2 +1,4 @@
 - [ ] Build speech-to-text pipeline for Nova.
 - [ ] build speech text pipeline~/Nova/scripts/nova-dispatch add todo to voice build speech to text pipeline
+- [ ] test spoken dispatcher confirmation
+- [ ] image

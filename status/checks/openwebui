@@ -1,11 +1,11 @@
 #!/bin/bash
 NAME="Open WebUI"
-URL="http://127.0.0.1:3000"
 
-if curl -fsS --max-time 5 "$URL" >/dev/null; then
-  echo "OK|$NAME|Online|$URL"
+if docker ps --format '{{.Names}} {{.Status}}' | grep -q '^open-webui .*Up'; then
+  STATUS=$(docker ps --format '{{.Names}} {{.Status}}' | grep '^open-webui ' | cut -d' ' -f2-)
+  echo "OK|$NAME|$STATUS|docker:open-webui"
   exit 0
 else
-  echo "DOWN|$NAME|Down|$URL"
+  echo "DOWN|$NAME|Down|docker:open-webui"
   exit 1
 fi

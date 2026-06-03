@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-02 07:30:02 PM",
+  "updated": "2026-06-02 09:02:01 PM",
   "systems": [
     {
       "id": "homeassistant",
@@ -28,10 +28,10 @@
     {
       "id": "openwebui",
       "name": "Open WebUI",
-      "state": "DOWN",
-      "message": "Down",
-      "url": "http://127.0.0.1:3000",
-      "exit_code": 1
+      "state": "OK",
+      "message": "Up 12 days (healthy)",
+      "url": "docker:open-webui",
+      "exit_code": 0
     }
   ]
 }

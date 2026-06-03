@@ -55,7 +55,6 @@ fi
 DOCKER=$(docker ps --format "<div class='service good'>● {{.Names}} <span>{{.Status}}</span></div>")
 MODELS=$(ollama list | tail -n +2 | awk '{print "<div>" $1 " — " $3 $4 "</div>"}')
 RECENT_HEALTH=$(ls -t /home/ai/Nova/logs/health/*.log 2>/dev/null | head -1 | xargs -r tail -n 8)
-LAST_UP
 
 EVENT_SUMMARY=$(tail -n 80 /home/ai/Nova/logs/events/events.log 2>/dev/null | \
 sed -E 's/^[0-9-]+ [0-9:]+ [APM]+ //' | \
@@ -241,6 +240,11 @@ pre {
 
 
   <div class="card wide">
+    <div class="label">Monitored Systems</div>
+    <div id="nova-status-list">Loading monitored systems...</div>
+  </div>
+
+  <div class="card wide">
     <div class="label">Docker Services</div>
     $DOCKER
   </div>
@@ -271,6 +275,28 @@ pre {
 <div class="footer">
 Last dashboard update: $LAST_UPDATE | Auto-refresh: 60 seconds
 </div>
+
+<script>
+fetch("data/status.json")
+.then(function(r) { return r.json(); })
+.then(function(data) {
+  var box = document.getElementById("nova-status-list");
+  if (!box) return;
+  box.innerHTML = "";
+
+  data.systems.forEach(function(s) {
+    var row = document.createElement("div");
+    row.className = s.state === "OK" ? "service good" : "service warn";
+    var icon = "●";
+    row.innerHTML = icon + " " + s.name + " <span>" + s.message + "</span>";
+    box.appendChild(row);
+  });
+})
+.catch(function() {
+  var box = document.getElementById("nova-status-list");
+  if (box) box.innerText = "Status data unavailable";
+});
+</script>
 
 </body>
 </html>

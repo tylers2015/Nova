@@ -103,33 +103,33 @@ pre {
     <div>Mode: Monitoring</div>
     <div>Tuesday, June 02, 2026</div>
   </div>
-  <div class="big">07:30 PM</div>
+  <div class="big">09:02 PM</div>
 </div>
 
 <div class="grid">
 	
   <div class="card">
     <div class="label">Weather - Fort Mill</div>
-    <div class="value">Sunny +75°F</div>
-    <div>Feels like: +63°F</div>
-    <div>Wind: ↙8mph</div>
-    <div>Humidity: 61%</div>
+    <div class="value">Sunny +68°F</div>
+    <div>Feels like: +58°F</div>
+    <div>Wind: ↙6mph</div>
+    <div>Humidity: 65%</div>
     <div>Precipitation: 0.0in</div>
   </div>
 
   <div class="card">
     <div class="label">System Uptime</div>
-    <div class="value">up 1 week, 5 days, 24 minutes</div>
+    <div class="value">up 1 week, 5 days, 1 hour, 56 minutes</div>
   </div>
 
   <div class="card">
     <div class="label">RAM</div>
-    <div class="value">6.6Gi used / 15Gi total | 8.4Gi available</div>
+    <div class="value">7.3Gi used / 15Gi total | 7.7Gi available</div>
   </div>
 
   <div class="card">
     <div class="label">Disk</div>
-    <div class="value">54G used / 109G total (52%)</div>
+    <div class="value">54G used / 109G total (53%)</div>
   </div>
 
   <div class="card">
@@ -153,6 +153,11 @@ pre {
     <div class="small">Last unknown command: yes</div>
   </div>
 
+
+  <div class="card wide">
+    <div class="label">Monitored Systems</div>
+    <div id="nova-status-list">Loading monitored systems...</div>
+  </div>
 
   <div class="card wide">
     <div class="label">Docker Services</div>
@@ -188,8 +193,7 @@ Nova status check complete.
 
   <div class="card wide">
     <div class="label">Recent Events</div> 
-    <pre>78x [INFO] Dashboard updated
-2x [SUCCESS] System health check completed</pre>
+    <pre>80x [INFO] Dashboard updated</pre>
   </div>
 
 </div>
@@ -197,6 +201,28 @@ Nova status check complete.
 <div class="footer">
 Last dashboard update:  | Auto-refresh: 60 seconds
 </div>
+
+<script>
+fetch("data/status.json")
+.then(function(r) { return r.json(); })
+.then(function(data) {
+  var box = document.getElementById("nova-status-list");
+  if (!box) return;
+  box.innerHTML = "";
+
+  data.systems.forEach(function(s) {
+    var row = document.createElement("div");
+    row.className = s.state === "OK" ? "service good" : "service warn";
+    var icon = "●";
+    row.innerHTML = icon + " " + s.name + " <span>" + s.message + "</span>";
+    box.appendChild(row);
+  });
+})
+.catch(function() {
+  var box = document.getElementById("nova-status-list");
+  if (box) box.innerText = "Status data unavailable";
+});
+</script>
 
 </body>
 </html>

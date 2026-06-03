@@ -1,0 +1,100 @@
+#!/usr/bin/env python3
+import sys
+import subprocess
+from pathlib import Path
+
+NOVA = Path.home() / "Nova"
+
+ALLOWED_READS = [
+    "scripts",
+    "status",
+    "dashboard",
+    "projects",
+    "docs",
+    "logs/status",
+]
+
+def run(cmd):
+    result = subprocess.run(cmd, text=True, capture_output=True)
+    return result.stdout.strip(), result.stderr.strip(), result.returncode
+
+def safe_cat(path):
+    p = (NOVA / path).resolve()
+
+    if not str(p).startswith(str(NOVA)):
+        print("Blocked: path outside Nova.")
+        return
+
+    if not p.exists():
+        print(f"Not found: {path}")
+        return
+
+    if p.is_dir():
+        print(f"Directory: {path}")
+        for item in sorted(p.iterdir()):
+            print(" -", item.name)
+        return
+
+    print(p.read_text(errors="ignore")[:6000])
+
+def status():
+    out, err, code = run([str(NOVA / "scripts/nova-status")])
+    print(out)
+    if err:
+        print(err)
+
+def git_status():
+    out, err, code = run(["git", "-C", str(NOVA), "status", "--short"])
+    print(out or "Git working tree clean.")
+    if err:
+        print(err)
+
+def recent_logs():
+    for folder in ["logs/status", "logs/incidents", "logs/events"]:
+        p = NOVA / folder
+        print(f"\n== {folder} ==")
+        if not p.exists():
+            print("missing")
+            continue
+        files = sorted(p.glob("*"), key=lambda x: x.stat().st_mtime, reverse=True)[:3]
+        for f in files:
+            print(f"\n--- {f.name} ---")
+            print(f.read_text(errors="ignore")[-2000:])
+
+def main():
+    cmd = " ".join(sys.argv[1:]).strip().lower()
+
+    if not cmd:
+        print("Nova Agent read-only mode")
+        print("Commands:")
+        print("  nova-agent status")
+        print("  nova-agent git")
+        print("  nova-agent logs")
+        print("  nova-agent list scripts")
+        print("  nova-agent read scripts/nova-status")
+        return
+
+    if cmd == "status":
+        status()
+        return
+
+    if cmd == "git":
+        git_status()
+        return
+
+    if cmd == "logs":
+        recent_logs()
+        return
+
+    if cmd.startswith("list "):
+        safe_cat(cmd[5:].strip())
+        return
+
+    if cmd.startswith("read "):
+        safe_cat(cmd[5:].strip())
+        return
+
+    print("Unknown or blocked command.")
+
+if __name__ == "__main__":
+    main()
