@@ -21,3 +21,5 @@ models/*.zip
 
 # System
 .DS_Store
+engines/whisper.cpp/
+tmp/
