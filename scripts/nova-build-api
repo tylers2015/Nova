@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+import json
+from pathlib import Path
+from datetime import datetime
+
+NOVA = Path.home() / "Nova"
+API = NOVA / "api"
+API.mkdir(exist_ok=True)
+
+def read_json(path, fallback):
+    try:
+        return json.loads(path.read_text())
+    except Exception:
+        return fallback
+
+status = read_json(NOVA / "dashboard/data/status.json", {"systems": []})
+dashboard_state = read_json(NOVA / "state/dashboard_state.json", {})
+
+events_log = NOVA / "logs/events/events.log"
+events = []
+if events_log.exists():
+    events = events_log.read_text(errors="ignore").splitlines()[-50:]
+
+updated = datetime.now().strftime("%Y-%m-%d %I:%M:%S %p")
+
+(API / "index.json").write_text(json.dumps({
+    "updated": updated,
+    "files": {
+        "status": "status.json",
+        "state": "state.json",
+        "events": "events.json"
+    }
+}, indent=2))
+
+(API / "status.json").write_text(json.dumps(status, indent=2))
+(API / "state.json").write_text(json.dumps(dashboard_state, indent=2))
+(API / "events.json").write_text(json.dumps({
+    "updated": updated,
+    "events": events
+}, indent=2))
+
+print("Nova API updated.")
